@@ -1,13 +1,17 @@
 <?php
+
    class MyDB extends SQLite3
    {
       function __construct()
       {
          $this->open('KoboReader.sqlite');
       }
-   }
+   } 
+ 
 
-   $db = new MyDB();
+
+   $db = new MyDB('KoboReader.sqlite');
+
    if(!$db){
       echo $db->lastErrorMsg();
    } else {
@@ -22,26 +26,40 @@
    order by VolumeID, ChapterProgress, StartContainerPath;
 EOF;
 
-$ret = $db->query($sql);
+$res = $db->query($sql);
 
 
 
 
- while($row = $ret->fetchArray(SQLITE3_ASSOC) ) {
-   $results[] = array('title'=>$row['BookTitle'],
-   array('chapter'=>$row['Chapter'], array('bookmarkID'=>$row['BookmarkID'],array('notes'=>$row['Text'],'annotations'=>$row['Annotation'])))); 
+ while($row = $res->fetchArray(SQLITE3_ASSOC) ) {
+
+   $results[] = [ 'title'=> $row['BookTitle'], 'chapter'=>$row['Chapter'],'bookmarkID'=>$row['BookmarkID'],'notes'=>$row['Text'],'annotations'=>$row['Annotation']];
+
    
-   
-
-
-
-   /* echo $row['BookTitle'] . "\n</br>";
-   echo $row['Chapter'] ."\n\n</br>";
-   echo $row['Text'] ."\n</br>";
-   echo $row['Annotation'] ."\n</br>";
-   echo "</br></br>"; */
 } 
-var_dump($results);
+$newresults = array();
+
+foreach($results as $array => $booknotes){
+      
+
+
+   foreach($booknotes as $books => $bookcontent){
+     /*  echo "array number: ". $array . ' contains ' . $books . ' with ' . $bookcontent. '</br>'; */
+     /* echo $booknotes['title'].' </br>';
+     echo $booknotes['chapter'].' </br>'; */
+     
+     
+      if(!in_array($booknotes['title'],$newresults)){
+         $newresults[] = $bookcontent;
+      } else if(!in_array($booknotes['chapter'],$newresults)){
+         $newsresults[] = $bookcontent;
+      }
+      
+   }
+};
+var_dump($newresults);
+
 echo "Operation done successfully\n";
+
 $db->close();
 ?>
