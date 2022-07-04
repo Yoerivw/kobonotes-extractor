@@ -6,6 +6,7 @@
          $this->open('KoboReader.sqlite');
       }
    }
+
    $db = new MyDB();
    if(!$db){
       echo $db->lastErrorMsg();
@@ -21,17 +22,26 @@
    order by VolumeID, ChapterProgress, StartContainerPath;
 EOF;
 
-//StartContainerPath, ChapterProgress, bmContentID
-
 $ret = $db->query($sql);
-while($row = $ret->fetchArray(SQLITE3_ASSOC) ) {
+
+
+
+
+ while($row = $ret->fetchArray(SQLITE3_ASSOC) ) {
+   $results[] = array('title'=>$row['BookTitle'],
+   array('chapter'=>$row['Chapter'], array('bookmarkID'=>$row['BookmarkID'],array('notes'=>$row['Text'],'annotations'=>$row['Annotation'])))); 
    
-   echo $row['BookTitle'] . "\n</br>";
+   
+
+
+
+   /* echo $row['BookTitle'] . "\n</br>";
    echo $row['Chapter'] ."\n\n</br>";
    echo $row['Text'] ."\n</br>";
    echo $row['Annotation'] ."\n</br>";
-   echo "</br></br>";
-}
+   echo "</br></br>"; */
+} 
+var_dump($results);
 echo "Operation done successfully\n";
 $db->close();
 ?>
