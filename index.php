@@ -37,6 +37,7 @@ $res = $db->query($sql);
 
    
 } 
+var_dump($results);
 $newresults = array();
 
 foreach($results as $array => $booknotes){
@@ -44,20 +45,20 @@ foreach($results as $array => $booknotes){
 
 
    foreach($booknotes as $books => $bookcontent){
-     /*  echo "array number: ". $array . ' contains ' . $books . ' with ' . $bookcontent. '</br>'; */
+      /* echo "array number: ". $array . ' contains ' . $books . ' with ' . $bookcontent. '</br>'; */
      /* echo $booknotes['title'].' </br>';
      echo $booknotes['chapter'].' </br>'; */
      
-     
       if(!in_array($booknotes['title'],$newresults)){
-         $newresults[] = $bookcontent;
-      } else if(!in_array($booknotes['chapter'],$newresults)){
-         $newsresults[] = $bookcontent;
-      }
+         $newresults['title'] =  $bookcontent;
+           /* echo "array number: ". $array . ' contains ' . $books . ' with ' . $bookcontent. '</br>';  */
+      } 
+      
+      
       
    }
 };
-var_dump($newresults);
+ //var_dump($newresults); 
 
 echo "Operation done successfully\n";
 
